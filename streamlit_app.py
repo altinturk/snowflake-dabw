@@ -32,22 +32,25 @@ streamlit.dataframe(fruits_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
 
-# now I parameterized the user input and put the parameter to the api call
-# so this way i can show only what the user needed 
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
+try:
+    # now I parameterized the user input and put the parameter to the api call
+    # so this way i can show only what the user needed 
+    fruit_choice = streamlit.text_input('What fruit would you like information about?')
 
+    if not fruit_choice:
+        streamlit.error("Please select a fruit to get information.")
+    else:
+        #let's call Fruityvice API from Our Streamlit App!
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +fruit_choice)
+        # if you don't add json fn at the end, it'll return rq status = "200"
+        # asssign json to a param 
+        fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+        # push param'd json to streamlit table and remove the pure json response afew lines above.
+        streamlit.dataframe(fruityvice_normalized)
 
-#let's call Fruityvice API from Our Streamlit App!
-#import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +fruit_choice)
-# if you don't add json fn at the end, it'll return rq status = "200"
-##streamlit.text(fruityvice_response.json())
+except URLError as e:
+    streamlit.error()
 
-# asssign json to a param 
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# push param'd json to streamlit table and remove the pure json response afew lines above.
-streamlit.dataframe(fruityvice_normalized)
 
 
 
