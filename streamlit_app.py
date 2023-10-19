@@ -43,3 +43,6 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +fruit_ch
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # push param'd json to streamlit table and remove the pure json response afew lines above.
 streamlit.dataframe(fruityvice_normalized)
+
+
+import snowflake.connector
