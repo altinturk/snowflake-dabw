@@ -29,8 +29,11 @@ streamlit.header("Fruityvice Fruit Advice!")
 
 #let's call Fruityvice API from Our Streamlit App!
 import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +"watermelon")
 # if you don't add json fn at the end, it'll return rq status = "200"
-streamlit.text(fruityvice_response.json())
+##streamlit.text(fruityvice_response.json())
 
-
+# asssign json to a param 
+fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+# push param'd json to streamlit table and remove the pure json response afew lines above.
+streamlit.dataframe(fruityvice_normalized)
