@@ -1,3 +1,8 @@
 import streamlit
 
-streamlit.title("Ristorante ai Caxxy")
+streamlit.title("Das Ristorante")
+streamlit.header('Breakfast Menu')
+streamlit.text('Oatmeal')
+streamlit.text('Eggs')
+streamlit.text('Brioche')
+
