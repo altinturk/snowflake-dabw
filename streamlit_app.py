@@ -22,4 +22,4 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 #reference for loc - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html
 
 # Display the table on the page.
-streamlit.dataframe(my_fruit_list)
+streamlit.dataframe(fruits_to_show)
