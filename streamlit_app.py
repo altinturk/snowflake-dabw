@@ -30,29 +30,31 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 
 
+#create a repeatable code block
+def get_fruityvice_data(this_fruit_choice):
+    #let's call Fruityvice API from Our Streamlit App!
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +this_fruit_choice)
+    # if you don't add json fn at the end, it'll return rq status = "200"
+    # asssign json to a param 
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    # push param'd json to streamlit table and remove the pure json response afew lines above.
+    return fruityvice_normalized  
+
+
 streamlit.header("Fruityvice Fruit Advice!")
 
 try:
     # now I parameterized the user input and put the parameter to the api call
-    # so this way i can show only what the user needed 
     fruit_choice = streamlit.text_input('What fruit would you like information about?')
 
     if not fruit_choice:
         streamlit.error("Please select a fruit to get information.")
     else:
-        #let's call Fruityvice API from Our Streamlit App!
-        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +fruit_choice)
-        # if you don't add json fn at the end, it'll return rq status = "200"
-        # asssign json to a param 
-        fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-        # push param'd json to streamlit table and remove the pure json response afew lines above.
-        streamlit.dataframe(fruityvice_normalized)
+        back_from_function = get_fruityvice_data(fruit_choice)
+        streamlit.dataframe(back_from_function)
 
 except URLError as e:
     streamlit.error()
-
-
-
 
 
 #don't run anything past here
