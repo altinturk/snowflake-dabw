@@ -27,9 +27,15 @@ streamlit.dataframe(fruits_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
 
+# now I parameterized the user input and put the parameter to the api call
+# so this way i can show only what the user needed 
+fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+streamlit.write('The user entered ', fruit_choice)
+
+
 #let's call Fruityvice API from Our Streamlit App!
 import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +"watermelon")
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" +fruit_choice)
 # if you don't add json fn at the end, it'll return rq status = "200"
 ##streamlit.text(fruityvice_response.json())
 
